@@ -41,7 +41,11 @@ async function destroy(req, res){
 async function create(req, res){
     const empresa = req.body
     const newEmpresa = await Empresa.create(empresa);
-    return res.json(newEmpresa);
+    return res.status(200).send({
+        status:1,
+        message:'Empresa atualizada com sucesso',
+        newEmpresa
+    });
 }
 
 async function update(req, res){
@@ -61,7 +65,11 @@ async function update(req, res){
         empresa.emp_fundacao = emp_fundacao;
     }
     await empresa.save();
-    return res.json(empresa)
+    return res.status(200).send({
+        status:1,
+        message:'Empresa atualizada com sucesso',
+        empresa
+    });
 }
 
 
