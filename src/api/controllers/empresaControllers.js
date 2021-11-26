@@ -28,20 +28,18 @@ async function listById(req, res){
 async function destroy(req, res){
     const {codigo} = req.params;
     const empresa = await Empresa.findByPk(codigo)
-    empresa.destroy().then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-        if(rowDeleted != undefined){
-            res.status(204)..send({
-                status:1,
-                message:'Empresa excluida com sucesso'
-            });
-         }
-      }, function(err){
-            res.status(405).send({
-                status:2,
-                message:'Registro filho encontrado'
-            });)
-      });;
-    ;
+    empresa.destroy().then(() =>{
+        return res.status(204).send({
+            status:1,
+            message:'Empresa excluida com sucesso'
+        });    
+    }).catch(error =>{
+        return res.status(409).send({
+            status:2,
+            message:'Não foi possivel excluir empresa',
+            error
+        });
+    });
 }
 
 async function create(req, res){
@@ -49,7 +47,7 @@ async function create(req, res){
     const newEmpresa = await Empresa.create(empresa);
     return res.status(200).send({
         status:1,
-        message:'Empresa atualizada com sucesso',
+        message:'Empresa criada com sucesso',
         empresa:newEmpresa
     });
 }
