@@ -30,10 +30,16 @@ async function destroy(req, res){
     const empresa = await Empresa.findByPk(codigo)
     empresa.destroy().then(function(rowDeleted){ // rowDeleted will return number of rows deleted
         if(rowDeleted != undefined){
-            res.status(204).send('{"message":"Registro filho encontrado"}')
+            res.status(204)..send({
+                status:1,
+                message:'Empresa excluida com sucesso'
+            });
          }
       }, function(err){
-            res.status(405).send('{"message":"Registro filho encontrado"}')
+            res.status(405).send({
+                status:2,
+                message:'Registro filho encontrado'
+            });)
       });;
     ;
 }
@@ -44,7 +50,7 @@ async function create(req, res){
     return res.status(200).send({
         status:1,
         message:'Empresa atualizada com sucesso',
-        newEmpresa
+        empresa:newEmpresa
     });
 }
 
